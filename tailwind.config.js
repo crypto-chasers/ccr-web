@@ -1,8 +1,5 @@
 module.exports = {
-  purge: {
-    enable: true,
-    content: ['./src/*.tsx', './src/**/*.tsx', './src/index.html'],
-  },
+  purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
@@ -13,9 +10,14 @@ module.exports = {
       xl: '1280px',
       '2xl': '1536px'
     },
-  },
-  variants: {
-    extend: {}
+    fontFamily: {
+      pix: ['IPix']
+    },
+    textColor: {
+      dark: '#3d2200',
+      main: '#fda51c',
+      light: '#ffe8a8'
+    }
   },
   plugins: []
 }

@@ -14,9 +14,6 @@
   "settings": {
     "react": {
       "version": "detect"
-    },
-    "tailwindcss": {
-      "cssFiles": ["src/index.css", "!**/node_modules"]
     }
   },
   "extends": [

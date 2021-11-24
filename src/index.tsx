@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { ChainId, DAppProvider } from '@usedapp/core'
 import { App } from './App'
+import './styles.css'
 
 const config = {
   readOnlyChainId: ChainId.Mainnet,
