@@ -2,16 +2,29 @@ import React from 'react'
 
 export interface IMainPageProps {
   isLogin?: boolean
-  etherBalance?: number
-  mintedCount?: 0 | 1 | 2
+  canMint?: boolean
+  nextSpend: '0' | '0.04' | '∞'
   remain?: number
+  pending?: boolean
+  tx?: string
+  address?: string
+  connectWallet?: (
+    onError?: (error: Error) => void,
+    throwErrors?: boolean
+  ) => void
+  send?: (...args: any[]) => Promise<void>
 }
 
 const MainPage = ({
   isLogin,
-  etherBalance,
-  mintedCount,
-  remain
+  canMint,
+  nextSpend,
+  remain,
+  pending,
+  tx,
+  address,
+  connectWallet,
+  send
 }: IMainPageProps) => {
   return (
     <div>
@@ -19,14 +32,37 @@ const MainPage = ({
         className="fixed top-0 left-0 z-0 bg-yellow-700 bg-repeat-y"
         src="/background.png"
       />
+      {/* modal */}
+      {pending ? (
+        <div className="overflow-y-auto fixed inset-0 z-30 w-full h-full bg-gray-600 bg-opacity-50">
+          <div className="relative top-52 p-5 mx-auto w-60 lg:w-1/2 bg-yellow-500 border-4 border-yellow-100 border-dashed shadow-lg">
+            <div className="mt-3 text-center">
+              <h3 className="font-pix text-2xl text-dark text-md">确认中</h3>
+              <div className="py-3 px-7 mt-2">
+                <a
+                  href={`https://etherscan.io/tx/${tx}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <p className="overflow-auto font-pix text-dark text-md">
+                    TX: <span className="underline"> {tx}</span>
+                  </p>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className="absolute top-0 left-0 z-10 p-2 lg:mx-72">
         <div className="flex p-2 h-12 md:h-20">
           <img src="/logo.png" />
           <a className="ml-auto" href="https://discord.gg/UdqpSwAF2e">
-            <img src="/discord.png" />
+            <img className="max-h-9 md:max-h-36" src="/discord.png" />
           </a>
           <a href="https://twitter.com/cryptochasersco">
-            <img src="/twitter.png" />
+            <img className="max-h-9 md:max-h-36" src="/twitter.png" />
           </a>
         </div>
         {/* introduction */}
@@ -36,32 +72,49 @@ const MainPage = ({
             是由随机元素生成的NFT，是CryptoChasers社区的身份证。社区主要由经验丰富的薅毛玩家和技术娴熟的科学家组成，进入社区享有最新活动信息、赚钱经验分享和实战技术指导。
           </p>
           <div className="flex justify-center">
-            <img className="hidden md:block py-2 w-80 h-80" src="robot.png" />
+            <img className="block py-2 w-80 h-80" src="robot.png" />
           </div>
         </div>
+
         {/* mint button */}
-        <div className="flex justify-center my-4">
+        <div className="flex justify-center px-2 my-4">
           <div className="flex-col md:w-96 lg:w-auto">
+            {isLogin ? (
+              <span className=" font-pix text-sm leading-none text-left text-light align-top">
+                当前账户: {address}
+              </span>
+            ) : (
+              <></>
+            )}
+
             <div className="my-2 font-pix text-2xl md:text-4xl text-main">
-              <span className="mr-4 text-light">剩余: {remain}</span>
+              <span className="mr-12 text-light">剩余: {remain}</span>
               {remain === 0 ? (
                 <></>
-              ) : !isLogin ? (
+              ) : !isLogin === undefined ? (
                 <></>
-              ) : etherBalance! <= 0.04 ? (
-                <span>需0.04ETH</span>
+              ) : canMint ? (
+                <span className=" text-light">
+                  价格: {nextSpend ?? '0.04'}E
+                </span>
               ) : (
-                <span className="text-light">可mint: {2 - mintedCount!}</span>
+                <span className=" text-light">限购2个</span>
               )}
             </div>
             {remain === 0 ? (
               <></>
             ) : !isLogin ? (
-              <img src="/button_metamask.png" />
-            ) : etherBalance! <= 0.04 ? (
-              <></>
+              <img
+                src="/button_metamask.png"
+                onClick={() => {
+                  console.log('connect to metamask')
+                  connectWallet!()
+                }}
+              />
+            ) : canMint ? (
+              <img src="/mint.png" onClick={() => send!()} />
             ) : (
-              <img src="/mint.png" />
+              <></>
             )}
           </div>
         </div>

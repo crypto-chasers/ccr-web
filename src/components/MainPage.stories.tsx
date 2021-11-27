@@ -1,6 +1,7 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import MainPage, { IMainPageProps } from './MainPage'
+import { BigNumber } from '@ethersproject/bignumber'
 
 export default {
   title: 'Project/MainPage',
@@ -23,13 +24,22 @@ MINTOVER.args = {
 export const CANMINT = Template.bind({})
 CANMINT.args = {
   isLogin: true,
-  etherBalance: 3.23324243,
-  mintedCount: 0,
-  remain: 500
+  canMint: true,
+  nextSpend: '0.04',
+  remain: 342,
+  address: '0x1234567890123456789012345678901234567890'
 }
 
-export const BALANCENOTENOUGH = Template.bind({})
-BALANCENOTENOUGH.args = {
+export const CANNOTMINT = Template.bind({})
+CANNOTMINT.args = {
   ...CANMINT.args,
-  etherBalance: 0.01
+  canMint: false,
+  nextSpend: '∞'
+}
+
+export const PENDING = Template.bind({})
+PENDING.args = {
+  ...CANMINT.args,
+  pending: true,
+  tx: '0x35fb8fdbebddab1b707fd79c395cef25d7a88080c6790079d77d630657a394bc'
 }
