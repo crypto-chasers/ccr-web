@@ -25,4 +25,3 @@ yarn-error.log*
 .DS_Store
 dist
 .eslintcache
-.env
