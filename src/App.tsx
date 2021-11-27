@@ -50,7 +50,7 @@ function useMintData(account?: string | null) {
 }
 
 export function App() {
-  const [isMainnet, setIsMainnet] = useState<boolean>(false)
+  const [isMainnet] = useState<boolean>(false)
   const { activateBrowserWallet, account } = useEthers()
   const remainSupply = useRemainSupply(ccrContractAddress)
   const [mintedCount, isInWhitelist] = useMintData(account)
@@ -66,6 +66,10 @@ export function App() {
     send({ value: utils.parseEther(ethAmount) })
   }
 
+  const onError = (error: Error) => {
+    console.log('connect wallet error: ', error.message)
+  }
+
   useEffect(() => {
     if (
       state.status !== 'None' &&
@@ -77,7 +81,6 @@ export function App() {
     }
     if (state.status === 'Mining') {
       setTx(state.transaction!.hash)
-      console.log('tx: ', tx)
     }
   }, [state]) // state.status === 'None' | 'Exception' | 'Mining' | 'Success', and has errorMessage
 
@@ -101,7 +104,7 @@ export function App() {
         tx={tx}
         address={account === null ? undefined : account}
         connectWallet={() => {
-          activateBrowserWallet
+          activateBrowserWallet(onError)
           setLogin(true)
         }}
         send={() =>
