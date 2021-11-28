@@ -5,7 +5,10 @@ import { App } from './App'
 import './styles.css'
 
 const config = {
-  readOnlyChainId: ChainId.Mainnet,
+  readOnlyChainId:
+    process.env.REACT_APP_IS_MAINNET === 'true'
+      ? ChainId.Mainnet
+      : ChainId.Rinkeby,
   readOnlyUrls: {
     [ChainId.Rinkeby]:
       'https://rinkeby.infura.io/v3/7b5aa8e0c2d44880ad8ed76c0a799df6',

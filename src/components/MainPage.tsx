@@ -26,19 +26,18 @@ const MainPage = ({
   pending,
   tx,
   address,
-  inWhilteList,
   connectWallet,
   send
 }: IMainPageProps) => {
   return (
     <div>
       <img
-        className="fixed top-0 left-0 z-0 bg-yellow-700 bg-repeat-y"
+        className="fixed top-0 left-0 z-0 w-full bg-yellow-700 bg-repeat-y"
         src="/background.png"
       />
       {/* modal */}
       {pending ? (
-        <div className="overflow-y-auto fixed inset-0 z-30 w-full h-full bg-gray-600 bg-opacity-50">
+        <div className="overflow-y-auto fixed inset-0 z-30 w-full h-full bg-gray-600 bg-opacity-50 ">
           <div className="relative top-52 p-5 mx-auto w-60 lg:w-1/2 bg-yellow-500 border-4 border-yellow-100 border-dashed shadow-lg">
             <div className="mt-3 text-center">
               <h3 className="font-pix text-2xl text-dark text-md">确认中</h3>
@@ -50,9 +49,9 @@ const MainPage = ({
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <p className="overflow-auto font-pix text-dark text-md">
+                  <div className="overflow-auto font-pix text-dark text-md">
                     TX: <span className="underline"> {tx}</span>
-                  </p>
+                  </div>
                 </a>
               </div>
             </div>
@@ -65,9 +64,9 @@ const MainPage = ({
         <div className="flex p-2 h-12 md:h-20">
           <img src="/logo.png" />
 
-          <p className="mt-2 mr-2 ml-auto main-text">
+          <div className="mt-2 mr-2 ml-auto main-text">
             {isMainnet ? '主网' : 'Rinkey测试网'}
-          </p>
+          </div>
 
           <a
             target="_blank"
@@ -93,10 +92,10 @@ const MainPage = ({
         </div>
         {/* introduction */}
         <div className="grid md:grid-cols-2 gap-2 px-2">
-          <p className="md:text-3xl main-text">
+          <div className="md:text-3xl main-text">
             CryptoChasers Robot
             是CryptoChasers社区的第一个NFT。社区主要由经验丰富的薅毛玩家和技术娴熟的科学家组成，进入社区享有最新活动信息、赚钱经验分享和实战技术指导。
-          </p>
+          </div>
           <div className="flex justify-center">
             <img className="block py-2 w-80 h-80" src="robot.png" />
           </div>
@@ -139,10 +138,6 @@ const MainPage = ({
             </div>
             {remain === 0 ? (
               <></>
-            ) : !inWhilteList && Date.now() <= 1_638_345_600_000 ? (
-              <p className="my-2 font-pix text-2xl md:text-3xl text-main">
-                mint时间 2021年12月1日16:00 UTC+8
-              </p>
             ) : !isLogin ? (
               <img
                 src="/button_metamask.png"
@@ -154,53 +149,55 @@ const MainPage = ({
             ) : canMint ? (
               <img src="/mint.png" onClick={send} />
             ) : (
-              <></>
+              <div className="my-2 font-pix text-2xl md:text-3xl text-main">
+                mint时间 2021年12月1日16:00 UTC+8
+              </div>
             )}
           </div>
         </div>
         {/* distribution plan */}
         <div className="p-2">
-          <p className="title-text">发行计划</p>
-          <p className="main-text">
+          <div className="title-text">发行计划</div>
+          <div className="main-text">
             售价 0.04 ETH，每个地址限购 2 个，总量500，其中 100 个左右用于空投。
             销售收入将进入社区金库，除去支付NFT制作发行的费用，其余由未来社区使用。
-          </p>
+          </div>
         </div>
         {/* background story */}
         <div className="p-2">
-          <p className="title-text">背景故事</p>
-          <p className="main-text">
+          <div className="title-text">背景故事</div>
+          <div className="main-text">
             疫情后抹杀不同国家、人类之间缺少信任，科技的载体——智能机器人“讯”们成为人与人仅有的维系；一只以情感联结为名研发的老旧机器人，执行着很多年前研发者的指令，在陌生的世界面对“关闭了真实情感”的人，继续生存和“觉醒”。
-          </p>
+          </div>
         </div>
         {/* community leader */}
         <div className="hidden sm:block p-2">
-          <p className="p-2 title-text">社区代表</p>
+          <div className="p-2 title-text">社区代表</div>
           <div className="grid grid-cols-4">
             <a
               className="avatar-container"
               href="https://twitter.com/scriptdotmoney"
             >
               <img className="avatar" src="/scriptmoney.png" />
-              <p className="intro-text">脚本刷钱</p>
+              <div className="intro-text">脚本刷钱</div>
             </a>
             <a
               className="avatar-container"
               href="https://twitter.com/huangnanlv"
             >
               <img className="avatar" src="/huangnanlv.png" />
-              <p className="intro-text">huangnanlv</p>
+              <div className="intro-text">huangnanlv</div>
             </a>
             <a className="avatar-container" href="https://twitter.com/wsdxbz1">
               <img className="avatar" src="/bigplayer.jpg" />
-              <p className="intro-text">BigPlayer</p>
+              <div className="intro-text">BigPlayer</div>
             </a>
             <a
               className="avatar-container"
               href="https://twitter.com/BitCloutCat"
             >
               <img className="avatar" src="/lasercat.png" />
-              <p className="intro-text">LaserCat</p>
+              <div className="intro-text">LaserCat</div>
             </a>
           </div>
         </div>

@@ -12,8 +12,10 @@ import { Falsy } from '@usedapp/core/dist/esm/src/model/types'
 import { utils } from 'ethers'
 
 const ccrInterface = new utils.Interface(CCR_ABI.abi)
-// const ccrContractAddress = '0xd0a9bc1F6D47e777950CF5dB032886FB779aAAC1'
-const ccrContractAddress = '0x81Ca1F6608747285c9c001ba4f5ff6ff2b5f36F8'
+const ccrContractAddress =
+  process.env.REACT_APP_IS_MAINNET === 'true'
+    ? '0x81Ca1F6608747285c9c001ba4f5ff6ff2b5f36F8'
+    : '0xBE797b1Caf898D0161dD1C665Df7253F86D28807'
 const contract = new Contract(ccrContractAddress, ccrInterface)
 
 function useRemainSupply(ccrAddress: string | Falsy) {
@@ -51,7 +53,9 @@ function useMintData(account?: string | null) {
 }
 
 export function App() {
-  const [isMainnet] = useState<boolean>(true)
+  const [isMainnet] = useState<boolean>(
+    process.env.REACT_APP_IS_MAINNET === 'true'
+  )
   const { activateBrowserWallet, account } = useEthers()
   const remainSupply = useRemainSupply(ccrContractAddress)
   const [mintedCount, isInWhitelist] = useMintData(account)
@@ -90,7 +94,12 @@ export function App() {
       <MainPage
         isMainnet={isMainnet}
         isLogin={isLogin}
-        canMint={isLogin && Number(mintedCount!) !== 2}
+        canMint={
+          isLogin &&
+          Number(mintedCount!) !== 2 &&
+          ((isInWhitelist && isInWhitelist[0]) ||
+            Date.now() >= 1_638_345_600_000)
+        }
         nextSpend={
           isInWhitelist && isInWhitelist[0] && Number(mintedCount!) === 0
             ? '0'
@@ -104,7 +113,6 @@ export function App() {
         pending={state.status === 'Mining'}
         tx={tx}
         address={account === null ? undefined : account}
-        inWhilteList={isInWhitelist && isInWhitelist[0]}
         connectWallet={() => {
           activateBrowserWallet(onError)
           setLogin(true)
