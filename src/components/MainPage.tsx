@@ -9,6 +9,7 @@ export interface IMainPageProps {
   pending?: boolean
   tx?: string | null
   address?: string
+  inWhilteList?: boolean
   connectWallet?: (
     onError?: (error: Error) => void,
     throwErrors?: boolean
@@ -25,6 +26,7 @@ const MainPage = ({
   pending,
   tx,
   address,
+  inWhilteList,
   connectWallet,
   send
 }: IMainPageProps) => {
@@ -62,17 +64,31 @@ const MainPage = ({
       <div className="absolute top-0 left-0 z-10 p-2 lg:mx-72">
         <div className="flex p-2 h-12 md:h-20">
           <img src="/logo.png" />
-          {isMainnet ? (
-            <></>
-          ) : (
-            <p className="mt-2 mr-2 ml-auto main-text">Rinkey测试网</p>
-          )}
 
-          <a href="https://discord.gg/UdqpSwAF2e">
+          <p className="mt-2 mr-2 ml-auto main-text">
+            {isMainnet ? '主网' : 'Rinkey测试网'}
+          </p>
+
+          <a
+            target="_blank"
+            href="https://discord.gg/UdqpSwAF2e"
+            rel="noreferrer"
+          >
             <img className="max-h-9 md:max-h-36" src="/discord.png" />
           </a>
-          <a href="https://twitter.com/cryptochasersco">
+          <a
+            target="_blank"
+            href="https://twitter.com/cryptochasersco"
+            rel="noreferrer"
+          >
             <img className="h-14 max-h-9 md:max-h-36" src="/twitter.png" />
+          </a>
+          <a
+            target="_blank"
+            href="https://opensea.io/collection/cryptochasers-robot"
+            rel="noreferrer"
+          >
+            <img className="ml-1 h-14 max-h-9 md:max-h-36" src="/opensea.png" />
           </a>
         </div>
         {/* introduction */}
@@ -123,6 +139,10 @@ const MainPage = ({
             </div>
             {remain === 0 ? (
               <></>
+            ) : !inWhilteList && Date.now() <= 1_638_345_600_000 ? (
+              <p className="my-2 font-pix text-2xl md:text-3xl text-main">
+                mint时间 2021年12月1日16:00 UTC+8
+              </p>
             ) : !isLogin ? (
               <img
                 src="/button_metamask.png"

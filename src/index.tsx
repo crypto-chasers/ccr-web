@@ -5,10 +5,12 @@ import { App } from './App'
 import './styles.css'
 
 const config = {
-  readOnlyChainId: ChainId.Rinkeby,
+  readOnlyChainId: ChainId.Mainnet,
   readOnlyUrls: {
     [ChainId.Rinkeby]:
-      'https://rinkeby.infura.io/v3/7b5aa8e0c2d44880ad8ed76c0a799df6'
+      'https://rinkeby.infura.io/v3/7b5aa8e0c2d44880ad8ed76c0a799df6',
+    [ChainId.Mainnet]:
+      'https://mainnet.infura.io/v3/7b5aa8e0c2d44880ad8ed76c0a799df6'
   }
 }
 

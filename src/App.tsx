@@ -12,7 +12,8 @@ import { Falsy } from '@usedapp/core/dist/esm/src/model/types'
 import { utils } from 'ethers'
 
 const ccrInterface = new utils.Interface(CCR_ABI.abi)
-const ccrContractAddress = '0xcFF34F53bcb34BDFC2E11215c84568BFdC03C9c9'
+// const ccrContractAddress = '0xd0a9bc1F6D47e777950CF5dB032886FB779aAAC1'
+const ccrContractAddress = '0x81Ca1F6608747285c9c001ba4f5ff6ff2b5f36F8'
 const contract = new Contract(ccrContractAddress, ccrInterface)
 
 function useRemainSupply(ccrAddress: string | Falsy) {
@@ -50,7 +51,7 @@ function useMintData(account?: string | null) {
 }
 
 export function App() {
-  const [isMainnet] = useState<boolean>(false)
+  const [isMainnet] = useState<boolean>(true)
   const { activateBrowserWallet, account } = useEthers()
   const remainSupply = useRemainSupply(ccrContractAddress)
   const [mintedCount, isInWhitelist] = useMintData(account)
@@ -103,6 +104,7 @@ export function App() {
         pending={state.status === 'Mining'}
         tx={tx}
         address={account === null ? undefined : account}
+        inWhilteList={isInWhitelist && isInWhitelist[0]}
         connectWallet={() => {
           activateBrowserWallet(onError)
           setLogin(true)
