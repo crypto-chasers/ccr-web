@@ -121,7 +121,7 @@ const MainPage = ({
             )}
 
             <div className="my-2 font-pix text-2xl md:text-3xl text-main">
-              <span className="mr-12 text-light">剩余: {remain}</span>
+              <span className="mr-12 text-light">剩余: {remain ?? 0}</span>
               {remain === 0 ? (
                 <></>
               ) : !isLogin === undefined ? (
@@ -136,8 +136,14 @@ const MainPage = ({
                 <span className=" text-light">限购2个</span>
               )}
             </div>
-            {remain === 0 ? (
-              <></>
+            {remain === 0 || remain === undefined ? (
+              <a
+                target="_blank"
+                href="https://opensea.io/assets/cryptochasers-robot?search[sortAscending]=true&search[sortBy]=PRICE"
+                rel="noreferrer"
+              >
+                <img className="w-60" src="/gotoopensea.png" />
+              </a>
             ) : !isLogin ? (
               <img
                 src="/button_metamask.png"
